@@ -1,0 +1,86 @@
+{% extends 'layouts/base_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('css/programs.css') }}">
+    <style>
+        .section-header {
+            padding-top: 100px;
+        }
+        .mb-3 {
+            padding-top: 30px;
+        }
+        .btn-primary {
+            margin-bottom: 30px;
+        }
+        .form-floating {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form id="form">
+        <div class="container">
+            <div class="feature-content">
+                <div class="row">
+                    <div class="section-header">
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a href="{{ path('admin_program') }}" class="btn btn-primary">Prideti programa</a>
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Akademijos pavadinimas</label>
+                            <input name="title" type="text" id="title" class="form-control" placeholder="Academy title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="academyUrl" class="form-label">Akademijos Url</label>
+                            <input name="academyUrl" type="text" id="academyUrl" class="form-control" placeholder="Academy Url">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="academyImageUrl" class="form-label">Akademijos Image Url</label>
+                            <input name="academyImageUrl" type="text" id="academyImageUrl" class="form-control" placeholder="Academy Image Url">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input name="slug" type="text" id="slug" class="form-control" placeholder="Slug">
+                        </div>
+
+                        <div class="form-floating">
+                            <label for="description">Aparasymas</label>
+                            <textarea name="description" class="form-control" placeholder="Academy description" id="description" style="height: 100px"></textarea>
+                        </div>
+
+                        <button id="buttonSubmit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $( document ).ready(function() {
+            $("#buttonSubmit").click(function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: '{{ path('api_admin_academy_create') }}',
+                    method: 'POST',
+                    data: $('#form').serialize(),
+                    success: function(response){
+                        if (response.status === 'success') {
+                            console.log('ok');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

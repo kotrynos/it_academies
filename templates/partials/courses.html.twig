@@ -1,0 +1,39 @@
+<!--new-arrivals start -->
+<section id="courses" class="new-arrivals">
+    <div class="container">
+        <div class="section-header">
+            <h2>programos</h2>
+        </div><!--/.section-header-->
+        <div class="new-arrivals-content">
+            <div class="row">
+                {% for category in categories %}
+                    <div class="col-md-3 col-sm-4">
+                        <div class="single-new-arrival">
+                            <div class="single-new-arrival-bg">
+                                <img
+                                    {% if category.slug == 'programming' %}
+                                        src="{{ asset('images/courses/programming.svg')}}"
+                                    {% elseif category.slug == 'other' %}
+                                        src="{{ asset('images/courses/other.svg')}}"
+                                    {% elseif category.slug == 'design' %}
+                                        src="{{ asset('images/courses/design.svg')}}"
+                                    {% elseif category.slug == 'testing' %}
+                                        src="{{ asset('images/courses/testing.svg')}}"
+                                    {% else %}
+                                        src="{{ asset('images/courses/data.svg')}}"
+                                    {% endif %}
+                                    alt="courses"
+                                />
+                                <a href="{{ path('programs', { 'slug': category.slug }) }}">
+                                    <div class="single-new-arrival-bg-overlay"></div>
+                                </a>
+                            </div>
+                            <h4><a href="{{ path('programs', { 'slug': category.slug }) }}">{{ category.title }}</a></h4>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div><!--/.container-->
+</section><!--/.new-arrivals-->
+<!--new-arrivals end -->

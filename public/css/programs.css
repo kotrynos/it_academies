@@ -1,0 +1,15 @@
+.single-feature {
+    width: 263px;
+    height: 301px;
+    position: relative;
+}
+.single-feature img{
+    height: 30%;
+}
+.single-feature h1{
+    padding-top: 40px
+}
+.single-feature p {
+    position: absolute;
+    bottom: 5px;
+}

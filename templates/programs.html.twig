@@ -1,0 +1,178 @@
+{% extends 'layouts/base_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #programImage {
+            height: 40px;
+            width: auto;
+        }
+        .card {
+            text-align: center;
+            background-color: #f8f9fd;
+            height: 260px;
+            padding: 15% 0;
+            margin-bottom: 5%;
+        }
+        form#form {
+            margin-top: 8%;
+        }
+        h1 {
+            margin-top: 10%;
+            margin-bottom: 15%;
+        }
+        a#card-button:hover,
+        a#card-button:focus {
+            width: 100px;
+            height: 32px!important;
+            text-decoration: none!important;
+            transition: none!important;
+        }
+        button#buttonSubmit,
+        a#card-button,
+        button#buttonReset {
+            width: 100px;
+            background-color: #e99c2e!important;
+            border: none!important;
+        }
+        button#buttonReset {
+            background-color: #999999!important;
+        }
+        button#buttonSubmit {
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section id="academies" class="feature">
+        <section class="container">
+            <form class="form-inline text-center" id="form">
+                <input type="hidden" name="slug" value="{{ slug }}"/>
+                {% for filter in filters %}
+                    {% if filter.title == 'Kaina' %}
+                        <div class="form-group">
+                            <label for="Kaina">Kaina</label>
+                            <select name="Kaina" class="form-control" id="Kaina">
+                                <option name="option" value="1">iki 500</option>
+                                <option name="option" value="2">iki 1000</option>
+                                <option name="option" value="3">nuo 1000</option>
+                                <option name="option" value="4">kompensuojama UZT</option>
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label for="{{ filter.title }}">{{ filter.title }}</label>
+                            <select name="{{ filter.title }}" class="form-control" id="{{ filter.title }}">
+                                {% for option in filter.options %}
+                                    <option name="option" value="{{ option }}">{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="buttonSubmit">Filtruoti</button>
+                    <button type="submit" class="btn btn-primary" id="buttonReset">Isvalyti</button>
+                </div>
+            </form>
+            <div class="feature-content">
+                <div class="row" id="program-container">
+                    {% for program in programs %}
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">
+                        <div class="card">
+                            <img id="programImage" src="{{ program.schoolImageUrl }}" alt="logo" class="card-img-top">
+                            <h1 class="card-title">{{ program.title }}</h1>
+                            <a id="card-button" href="{{ path('programs_program', { 'id': program.id }) }}" class="btn btn-primary">Placiau</a>
+                        </div>
+                    </div>
+                    {% else %}
+                        <h4>Sioje kategorijoje programu nera</h4>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock content %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $( document ).ready(function() {
+        $("#buttonSubmit").click(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '{{ path('api_programs_filter') }}',
+                method: 'POST',
+                data: $('#form').serialize(),
+                success: function(response){
+                    if (response.status === 'success') {
+                        let program_container = $('#program-container');
+                        program_container.empty();
+
+                        let html = '';
+
+                        if (response.data.length === 0) {
+                            html += '<div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">';
+                            html += '<h1>Neradome atitikimo pagal jusu pasirinktus kriterijus</h1>';
+                            html += '</div>';
+                        } else {
+                            $.each(response.data, function(key, value) {
+                                let url = '{{ path('programs_program', { 'id': 'program_id' }) }}' .replace('program_id', value.id);
+
+                                html += '<div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">';
+                                html += '<div class="card">';
+                                html += '<img src='+ value.schoolImageUrl +' alt="logo" id="programImage" class="card-img-top"/>';
+                                html += '<h1 class="card-title">' + value.title + '</h1>';
+                                html += '<a id="card-button" class="btn btn-primary" href=' + url + '>Placiau</a>';
+                                html += '</div>';
+                                html += '</div>';
+                            });
+                        }
+
+                        program_container.html(html);
+                    }
+                }
+            });
+        });
+
+        $("#buttonReset").click(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '{{ path('api_programs_filter_reset', { 'slug': slug }) }}',
+                method: 'GET',
+                success: function(response){
+                    if (response.status === 'success') {
+                        let program_container = $('#program-container');
+                        program_container.empty();
+
+                        let html = '';
+
+                        if (response.data.length === 0) {
+                            html += '<div class="col-sm-3">';
+                            html += '<h1>Neradome atitikimo pagal jusu pasirinktus kriterijus</h1>';
+                            html += '</div>';
+                        } else {
+                            $.each(response.data, function(key, value) {
+                                let url = '{{ path('programs_program', { 'id': 'program_id' }) }}' .replace('program_id', value.id);
+
+                                html += '<div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">';
+                                html += '<div class="card">';
+                                html += '<img src='+ value.schoolImageUrl +' alt="logo" id="programImage" class="card-img-top"/>';
+                                html += '<h1 class="card-title">' + value.title + '</h1>';
+                                html += '<a id="card-button" class="btn btn-primary" href=' + url + '>Placiau</a>';
+                                html += '</div>';
+                                html += '</div>';
+                            });
+                        }
+
+                        program_container.html(html);
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

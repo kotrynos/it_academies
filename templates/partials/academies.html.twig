@@ -1,0 +1,33 @@
+<!--feature start -->
+<style>
+    #academies {
+        background: #f8f9fd;
+        padding-bottom: 10%;
+    }
+
+    #academyImage {
+        height: 50px;
+        width: auto;
+    }
+</style>
+<section id="academies" class="feature">
+    <div class="container">
+        <div class="section-header">
+            <h2>akademijos/mokyklos</h2>
+        </div><!--/.section-header-->
+        <div class="feature-content">
+            <div class="row">
+                {% for academy in academies %}
+                    <div class="col-sm-3">
+                        <div class="single-feature" style="text-align: center;">
+                            <a href="{{ path('academies', { 'slug': academy.slug }) }}">
+                                <img id="academyImage" src="{{ academy.AcademyImageUrl }}" alt="feature image">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div><!--/.container-->
+</section><!--/.feature-->
+<!--feature end -->

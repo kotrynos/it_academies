@@ -1,0 +1,96 @@
+{% extends 'layouts/base_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/programs.css') }}">
+    <style>
+        .section-header {
+            padding-top: 100px;
+        }
+        .mb-3 {
+            padding-top: 30px;
+        }
+        .btn-primary {
+            margin-bottom: 30px;
+        }
+        .form-floating {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form id="form">
+        <div class="container">
+            <div class="feature-content">
+                <div class="row">
+                    <div class="section-header">
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example" name="academy">
+                                <option selected>Akademijos pavadinimas </option>
+                                {% for academy in academies %}
+                                    <option value="{{ academy.slug }}">{{ academy.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Programos pavadinimas</label>
+                            <input name="title" type="text" id="title" class="form-control" placeholder="Program title">
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Default select example" name="category">
+                                <option selected>Programos kategorija</option>
+                                {% for category in categories %}
+                                    <option value="{{ category }}">{{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Kaina</label>
+                            <input name="price" type="text" id="price" class="form-control" placeholder="Price">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="city" class="form-label">Miestas</label>
+                            <input name="city" type="text" id="city" class="form-control" placeholder="City">
+                        </div>
+
+                        <div class="form-floating">
+                            <label for="description">Aparasymas</label>
+                            <textarea name="description" class="form-control" placeholder="Program description" id="description" style="height: 100px"></textarea>
+                        </div>
+
+                        <button id="buttonSubmit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $( document ).ready(function() {
+            $("#buttonSubmit").click(function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: '{{ path('api_admin_program_create') }}',
+                    method: 'POST',
+                    data: $('#form').serialize(),
+                    success: function(response){
+                        if (response.status === 'success') {
+                            console.log('ok');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

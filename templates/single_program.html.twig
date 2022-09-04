@@ -1,0 +1,31 @@
+{% extends 'layouts/base_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/programs.css') }}">
+
+    <style>
+        .single-welcome-hero{
+            height: 50rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<section id="academies" class="feature">
+    <section class="container">
+            <div class="welcome-hero-content">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="single-welcome-hero">
+                            <div class="welcome-hero-txt">
+                                <h2>{{ program.title }}</h2>
+                                <p>{{ program.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</section>
+{% endblock content %}
