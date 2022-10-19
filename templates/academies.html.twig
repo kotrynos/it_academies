@@ -60,21 +60,21 @@
                                     <div class="welcome-hero-txt">
                                         <h2>{{ academy.title }}</h2>
                                         <p>{{ academy.description }}</p>
-                                    </div><!--/.welcome-hero-txt-->
-                                </div><!--/.single-welcome-hero-->
-                            </div><!--/.col-->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-sm-5">
                                 <div class="single-welcome-hero">
                                     <div class="welcome-hero-img">
                                         <img id="schoolImage" src="{{ academy.academyImageUrl }}" alt="slider image">
-                                    </div><!--/.welcome-hero-txt-->
-                                </div><!--/.single-welcome-hero-->
-                            </div><!--/.col-->
-                        </div><!--/.row-->
-                    </div><!--/.welcome-hero-content-->
-                </div><!-- /.container-->
-            </div><!-- /.single-slide-item-->
-        </div><!-- /.item .active-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section id="academies" class="feature">
             <section class="container">
                 <form class="form-inline text-center" id="form">
@@ -154,7 +154,7 @@
                             let html = '';
                             if (response.data.length === 0) {
                                 html += '<div class="col-sm-6 col-md-3 col-lg-3 col-xs-6">';
-                                html += '<h1>Neradome atitikimo pagal jusu pasirinktus kriterijus</h1>';
+                                html += '<h1>Neradome atitikimo pagal jūsų pasirinktus kriterijus</h1>';
                                 html += '</div>';
                             } else {
                                 $.each(response.data, function(key, value) {
