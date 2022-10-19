@@ -31,7 +31,7 @@ class ProgramController extends AbstractController
                 'filters' => $this->programFilterResolver->resolve($slug),
                 'programs' => $this->programDataProvider->findByCategory($slug),
                 'slug' => $slug,
-            ]
+            ],
         );
     }
 }

@@ -8,11 +8,13 @@ class ProgramFilter
 {
     public const DEFAULT_FILTERS_CITY = [
         'title' => 'Miestas',
+        'value' => 'city',
         'options' => ['Vilnius', 'Kaunas', 'Klaipeda', 'Online'],
     ];
 
     public const DEFAULT_FILTERS_PRICE = [
         'title' => 'Kaina',
+        'value' => 'price',
         'options' => ['iki 500', 'iki 1000 ', 'nuo 1000', 'kompensuojama UZT'],
         'options_values' => ['500', '1000', '1000', 'kompensuojama UZT'],
     ];
@@ -20,6 +22,7 @@ class ProgramFilter
     public const PROGRAMMING_FILTER = [
         [
             'title' => 'Programos',
+            'value' => 'program',
             'options' => ['PHP', 'C+', 'Java'],
         ],
         self::DEFAULT_FILTERS_CITY,
@@ -34,6 +37,7 @@ class ProgramFilter
     public const OTHER_PROGRAMS_FILTER = [
         [
             'title' => 'Programos',
+            'value' => 'program',
             'options' => ['SEO', 'dirbtinis intelektas', 'agile', 'cyber security'],
         ],
         self::DEFAULT_FILTERS_CITY,

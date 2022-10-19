@@ -15,7 +15,7 @@ class CategoryDataProvider
     ) {
     }
 
-    public function findAllCategoryTitles(): array
+    public function findAllCategories(): array
     {
         return $this->entityToDTOTransformer->transformMany(
             $this->categoryRepository->findAll()

@@ -23,7 +23,7 @@ class AdminController extends AbstractController
             self::DEFAULT_TEMPLATE,
             [
                 'title' => self::DEFAULT_TITLE,
-            ]
+            ],
         );
     }
 }

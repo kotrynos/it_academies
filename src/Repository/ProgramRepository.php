@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DTO\AcademyFilterRequest;
+use App\DTO\ProgramFilterRequest;
 use App\Entity\Program;
+use App\Enum\ProgramPrice;
 use App\Exception\ProgramNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,38 +51,28 @@ class ProgramRepository extends ServiceEntityRepository
     /**
      * @return Program[]
      */
-    public function findByFilters(
-        ?string $title,
-        string $city,
-        string $price,
-        string $slug
-    ): array {
+    public function findByFilters(ProgramFilterRequest $filterRequest): array
+    {
         $query = $this->createQueryBuilder('program');
 
-        $query
-            ->andWhere('program.programCategory = :category')
-            ->andWhere('program.city = :city')
-            ->setParameters([
-                'category' => $slug,
-                'city' => $city,
-            ]);
+        if ($filterRequest->getSlug() !== null) {
+            $query
+                ->andWhere('program.programCategory = :category')
+                ->setParameter('category', $filterRequest->getSlug());
+        }
 
-        if ($title !== null) {
+        if ($filterRequest->getCity() !== null) {
+            $query
+                ->andWhere('program.city = :city')
+                ->setParameter('city', $filterRequest->getCity());
+        }
+
+        if ($filterRequest->getProgram() !== null) {
             $query->andWhere('program.title = :title');
-            $query->setParameter('title', $title);
+            $query->setParameter('title', $filterRequest->getProgram());
         }
 
-        if ($price === '1') {
-            $query->andWhere('program.price < 500');
-        } elseif ($price === '2') {
-            $query->andWhere('program.price < 1000');
-        } elseif ($price === '3') {
-            $query->andWhere('program.price > 1000');
-        } else {
-            $query->andWhere('program.price = 0');
-        }
-
-        $result = $query
+        $result = $this->addQueryByPrice($query, (string)$filterRequest->getPrice())
             ->getQuery()
             ->getResult();
 
@@ -100,37 +94,45 @@ class ProgramRepository extends ServiceEntityRepository
     /**
      * @return Program[]
      */
-    public function findByAcademySlugAndFilters(
-        string $slug,
-        string $category,
-        string $city,
-        string $price
-    ): array {
+    public function findByAcademySlugAndFilters(AcademyFilterRequest $filterRequest): array
+    {
         $query = $this->createQueryBuilder('program')
             ->innerJoin('program.academy', 'pa')
             ->andWhere('pa.slug = :academySlug')
-            ->andWhere('program.programCategory = :category')
-            ->andWhere('program.city = :city');
+            ->setParameter('academySlug', $filterRequest->getSlug());
 
-        if ($price === '1') {
-            $query->andWhere('program.price < 500');
-        } elseif ($price === '2') {
-            $query->andWhere('program.price < 1000');
-        } elseif ($price === '3') {
-            $query->andWhere('program.price > 1000');
-        } else {
-            $query->andWhere('program.price = 0');
+        if ($filterRequest->getCity() !== null) {
+            $query
+                ->andWhere('program.city = :city')
+                ->setParameter('city', $filterRequest->getCity());
         }
 
-        $result = $query
-            ->setParameters([
-                'academySlug' => $slug,
-                'category' => $category,
-                'city' => $city,
-            ])
+        if ($filterRequest->getProgram() !== null) {
+            $query->andWhere('program.programCategory = :category');
+            $query->setParameter('category', $filterRequest->getProgram());
+        }
+
+        $result = $this->addQueryByPrice($query, (string)$filterRequest->getPrice())
             ->getQuery()
             ->getResult();
 
         return $result ?? [];
+    }
+
+    private function addQueryByPrice(QueryBuilder $query, string $price): QueryBuilder
+    {
+        if ($price === '1') {
+            return $query->andWhere(\sprintf('program.price < %s', ProgramPrice::MIN));
+        }
+
+        if ($price === '2') {
+            return $query->andWhere(\sprintf('program.price < %s', ProgramPrice::MAX));
+        }
+
+        if ($price === '3') {
+            return $query->andWhere(\sprintf('program.price > %s', ProgramPrice::MAX));
+        }
+
+        return $query->andWhere(\sprintf('program.price = %s', ProgramPrice::FREE));
     }
 }

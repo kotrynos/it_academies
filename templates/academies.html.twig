@@ -89,10 +89,10 @@
                         </select>
                     </div>
                     {% for filter in filters %}
-                        {% if filter.title == 'Kaina' %}
+                        {% if filter.value == 'price' %}
                         <div class="form-group">
-                            <label for="Kaina">Kaina</label>
-                            <select name="Kaina" class="form-control" id="Kaina">
+                            <label for="price">Kaina</label>
+                            <select name="price" class="form-control" id="price">
                                 <option name="option" value="1">iki 500</option>
                                 <option name="option" value="2">iki 1000</option>
                                 <option name="option" value="3">nuo 1000</option>
@@ -101,8 +101,8 @@
                         </div>
                         {% else %}
                         <div class="form-group">
-                            <label for="{{ filter.title }}">{{ filter.title }}</label>
-                            <select name="{{ filter.title }}" class="form-control" id="{{ filter.title }}">
+                            <label for="{{ filter.value }}">{{ filter.title }}</label>
+                            <select name="{{ filter.value }}" class="form-control" id="{{ filter.value }}">
                                 {% for option in filter.options %}
                                     <option name="option" value="{{ option }}">{{ option }}</option>
                                 {% endfor %}
@@ -112,7 +112,7 @@
                     {% endfor %}
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" id="buttonSubmit">Filtruoti</button>
-                        <button type="submit" class="btn btn-primary" id="buttonReset">Isvalyti</button>
+                        <button type="submit" class="btn btn-primary" id="buttonReset">Išvalyti</button>
                     </div>
                 </form>
                 <div class="feature-content">
@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            <h4>Sioje kategorijoje programu nera</h4>
+                            <h4>Šioje kategorijoje programų nera</h4>
                         {% endfor %}
                     </div>
                 </div>

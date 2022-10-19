@@ -32,7 +32,7 @@ class AdminProgramController extends AbstractController
                 'title' => self::DEFAULT_TITLE,
                 'academies' => $this->academyDataProvider->findAllAcademies(),
                 'categories' => ProgramName::PROGRAM_CATEGORIES,
-            ]
+            ],
         );
     }
 }

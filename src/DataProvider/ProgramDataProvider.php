@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataProvider;
 
+use App\DTO\AcademyFilterRequest;
 use App\DTO\Program;
+use App\DTO\ProgramFilterRequest;
 use App\Exception\ProgramNotFoundException;
 use App\Repository\ProgramRepository;
 use App\Transformer\ProgramEntityToDTOTransformer;
@@ -27,14 +29,10 @@ class ProgramDataProvider
     /**
      * @return array
      */
-    public function findByFilters(
-        ?string $title,
-        string $city,
-        string $price,
-        string $slug
-    ): array {
+    public function findByFilters(ProgramFilterRequest $filterRequest): array
+    {
         return $this->programEntityToDTOTransformer->transformMany(
-            $this->programRepository->findByFilters($title, $city, $price, $slug)
+            $this->programRepository->findByFilters($filterRequest)
         );
     }
 
@@ -51,14 +49,10 @@ class ProgramDataProvider
     /**
      * @return array
      */
-    public function findByAcademySlugAndFilters(
-        string $slug,
-        string $program,
-        string $city,
-        string $price
-    ): array {
+    public function findByAcademySlugAndFilters(AcademyFilterRequest $filterRequest): array
+    {
         return $this->programEntityToDTOTransformer->transformMany(
-            $this->programRepository->findByAcademySlugAndFilters($slug, $program, $city, $price)
+            $this->programRepository->findByAcademySlugAndFilters($filterRequest)
         );
     }
 
