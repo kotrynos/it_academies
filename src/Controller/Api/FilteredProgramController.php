@@ -29,18 +29,4 @@ class FilteredProgramController extends AbstractController
             ),
         ]);
     }
-
-    #[Route(path: '/api/academy/{slug}/programs/filter', name: 'api_academy_programs_filter', methods: ['POST'])]
-    public function handleAcademyProgramsFiltering(Request $request, string $slug): JsonResponse
-    {
-        return $this->json([
-            'status' => 'success',
-            'data' => $this->programDataProvider->findByAcademySlugAndFilters(
-                $slug,
-                $request->get('programs'),
-                $request->get('Miestas'),
-                $request->get('Kaina'),
-            ),
-        ]);
-    }
 }

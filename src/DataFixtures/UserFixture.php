@@ -24,7 +24,7 @@ class UserFixture extends AbstractUserFixture
         $user2 = new User();
         $user2->setEmail('test1@test.com');
         $user2->setRoles(['ROLE_USER']);
-        $user2->setFirstName('Dima');
+        $user2->setFirstName('Kotryna 1');
 
         $manager->persist($user2);
         $manager->flush();

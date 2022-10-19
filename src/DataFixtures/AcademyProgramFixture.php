@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Constant\ProgramName;
+use App\Enum\ProgramName;
 use App\Entity\Academy;
 use App\Entity\Program;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

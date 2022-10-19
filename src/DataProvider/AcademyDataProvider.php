@@ -6,6 +6,7 @@ namespace App\DataProvider;
 
 use App\DTO\Academy;
 use App\Entity\Academy as AcademyEntity;
+use App\Exception\AcademyNotFoundException;
 use App\Repository\AcademyRepository;
 use App\Transformer\AcademyEntityToDTOTransformer;
 
@@ -27,15 +28,23 @@ class AcademyDataProvider
         );
     }
 
-    public function getBySlug(string $slug): Academy
+    public function getBySlug(string $slug): ?Academy
     {
-        return $this->entityToDTOTransformer->transformSingle(
-            $this->academyRepository->getBySlug($slug)
-        );
+        try {
+            return $this->entityToDTOTransformer->transformSingle(
+                $this->academyRepository->getBySlug($slug)
+            );
+        } catch (AcademyNotFoundException) {
+            return null;
+        }
     }
 
-    public function getAcademyBySlug(string $slug): AcademyEntity
+    public function getAcademyBySlug(string $slug): ?AcademyEntity
     {
-        return $this->academyRepository->getBySlug($slug);
+        try {
+            return $this->academyRepository->getBySlug($slug);
+        } catch (AcademyNotFoundException) {
+            return null;
+        }
     }
 }

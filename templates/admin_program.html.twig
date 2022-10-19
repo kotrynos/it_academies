@@ -80,7 +80,7 @@
                 event.preventDefault();
 
                 $.ajax({
-                    url: '{{ path('api_admin_program_create') }}',
+                    url: '{{ path('api_admin_program') }}',
                     method: 'POST',
                     data: $('#form').serialize(),
                     success: function(response){

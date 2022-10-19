@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
     private const DEFAULT_TEMPLATE = 'homepage.html.twig';
-    private const DEFAULT_TITLE = 'LT IT akademijos';
+    private const DEFAULT_TITLE = 'Lietuvos IT akademijos';
 
     public function __construct(
         private CategoryDataProvider $categoryDataProvider,
