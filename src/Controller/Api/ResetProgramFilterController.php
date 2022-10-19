@@ -19,9 +19,11 @@ class ResetProgramFilterController extends AbstractController
     #[Route(path: '/api/programs/filter/reset/{slug}', name: 'api_programs_filter_reset', methods: ['GET'])]
     public function __invoke(Request $request, string $slug): JsonResponse
     {
-        return $this->json([
-            'status' => 'success',
-            'data' => $this->programDataProvider->findByCategory($slug),
-        ]);
+        return $this->json(
+            [
+                'status' => 'success',
+                'data' => $this->programDataProvider->findByCategory($slug),
+            ],
+        );
     }
 }

@@ -28,9 +28,9 @@ class HomepageController extends AbstractController
             self::DEFAULT_TEMPLATE,
             [
                 'title' => self::DEFAULT_TITLE,
-                'categories' => $this->categoryDataProvider->findAllCategoryTitles(),
+                'categories' => $this->categoryDataProvider->findAllCategories(),
                 'academies' => $this->academyDataProvider->findAllAcademies(),
-            ]
+            ],
         );
     }
 }

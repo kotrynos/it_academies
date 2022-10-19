@@ -11,9 +11,9 @@
                 </div>
                 <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
                     <ul class="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="active"><a href="http://127.0.0.1:8000#home">pagrindinis</a></li>
-                        <li class=""><a href="http://127.0.0.1:8000#courses">programos</a></li>
-                        <li class=""><a href="http://127.0.0.1:8000#academies">akademijos/mokyklos</a></li>
+                        <li class="active"><a href="{{ app.request.getSchemeAndHttpHost() ~ '#home' }}">pagrindinis</a></li>
+                        <li class=""><a href="{{ app.request.getSchemeAndHttpHost() ~ '#courses' }}">programos</a></li>
+                        <li class=""><a href="{{ app.request.getSchemeAndHttpHost() ~ '#academies' }}">akademijos/mokyklos</a></li>
                     </ul>
                 </div>
             </div>

@@ -32,7 +32,7 @@ class AcademyController extends AbstractController
                 'academy' => $this->academyDataProvider->getBySlug($slug),
                 'programs' => $this->programDataProvider->findByAcademySlug($slug),
                 'filters' => ProgramFilter::DEFAULT_PROGRAMS_FILTER,
-            ]
+            ],
         );
     }
 }
