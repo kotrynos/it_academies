@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Resolver;
 
-use App\Constant\ProgramName;
-use App\Constant\ProgramFilter;
+use App\Enum\ProgramName;
+use App\Enum\ProgramFilter;
 
 class ProgramFilterResolver
 {

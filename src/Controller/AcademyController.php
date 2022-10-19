@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Constant\ProgramFilter;
+use App\Enum\ProgramFilter;
 use App\DataProvider\AcademyDataProvider;
 use App\DataProvider\ProgramDataProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

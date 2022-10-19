@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class NewAcademyController extends AbstractController
+class CreateAcademyController extends AbstractController
 {
     public function __construct(
         private AcademyRequestToDTOTransformer $transformer,
@@ -19,12 +19,10 @@ class NewAcademyController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/api/admin/academy/create', name: 'api_admin_academy_create', methods: ['POST'])]
+    #[Route(path: '/api/admin/academy', name: 'api_admin_academy', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
-        $this->dataPersister->createNewAcademyFromModel(
-            $this->transformer->transform($request)
-        );
+        $this->dataPersister->createNewAcademyFromModel($this->transformer->transform($request));
 
         return $this->json([
             'status' => 'success',

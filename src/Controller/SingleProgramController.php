@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SingleProgramController extends AbstractController
 {
     private const DEFAULT_TEMPLATE = 'single_program.html.twig';
-    private const DEFAULT_TITLE = 'Pasirinkta programa';
+    private const DEFAULT_TITLE = 'Pasirinktą programą';
 
     public function __construct(private ProgramDataProvider $programDataProvider)
     {

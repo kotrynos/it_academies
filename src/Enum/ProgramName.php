@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Constant;
+namespace App\Enum;
 
 class ProgramName
 {

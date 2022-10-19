@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class NewProgramController extends AbstractController
+class CreateProgramController extends AbstractController
 {
     public function __construct(
         private AcademyDataProvider $academyDataProvider,
@@ -21,15 +21,19 @@ class NewProgramController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/api/admin/program/create', name: 'api_admin_program_create', methods: ['POST'])]
+    #[Route(path: '/api/admin/program', name: 'api_admin_program', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
-        $this->dataPersister->createNewProgramFromModel(
-            $this->transformer->transform(
-                $request,
-                $this->academyDataProvider->getAcademyBySlug($request->get('academy')),
-            )
-        );
+        $academy = $this->academyDataProvider->getAcademyBySlug($request->get('academy'));
+
+        if ($academy === null) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Academy was not found',
+            ]);
+        }
+
+        $this->dataPersister->createNewProgramFromModel($this->transformer->transform($request, $academy));
 
         return $this->json([
             'status' => 'success',
