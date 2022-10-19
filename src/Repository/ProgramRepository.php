@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Program;
+use App\Exception\ProgramNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,12 +21,21 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
+    /**
+     * @throws ProgramNotFoundException
+     */
     public function getById(string $id): Program
     {
-        return $this->find($id);
+        $program = $this->find($id);
+
+        if ($program instanceof Program) {
+            return $program;
+        }
+
+        throw new ProgramNotFoundException(\sprintf('Program with id %s does not exist', $id));
     }
 
-    public function findByCategory(string $category)
+    public function findByCategory(string $category): array
     {
         return $this->createQueryBuilder('program')
             ->where('program.programCategory = :category')
