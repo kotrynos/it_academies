@@ -1,0 +1,20 @@
+parameters:
+    level: 8
+    tmpDir: ./var/cache/phpstan
+    fileExtensions:
+        - php
+    paths:
+        - ./src
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+    excludePaths:
+        - '%currentWorkingDirectory%/src/migrations/*'
+        - '%currentWorkingDirectory%/src/Security/*'
+        - *Kernel.php
+        - '%currentWorkingDirectory%/src/Repository/UserRepository.php'
+
+    ignoreErrors:
+        - '#\$id is never written, only read#'
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

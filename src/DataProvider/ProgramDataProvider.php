@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataProvider;
 
 use App\DTO\Program;
+use App\Exception\ProgramNotFoundException;
 use App\Repository\ProgramRepository;
 use App\Transformer\ProgramEntityToDTOTransformer;
 
@@ -60,10 +61,14 @@ class ProgramDataProvider
         );
     }
 
-    public function getById(string $id): Program
+    public function getById(string $id): ?Program
     {
-        return $this->programEntityToDTOTransformer->transformSingle(
-            $this->programRepository->getById($id)
-        );
+        try {
+            return $this->programEntityToDTOTransformer->transformSingle(
+                $this->programRepository->getById($id)
+            );
+        } catch (ProgramNotFoundException) {
+            return null;
+        }
     }
 }

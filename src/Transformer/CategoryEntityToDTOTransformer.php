@@ -24,7 +24,7 @@ class CategoryEntityToDTOTransformer
         foreach ($categories as $category) {
             $title = $category->getTitle();
 
-            $categoryModels[] = new Category($title, $this->slugResolver->resolve($title));
+            $categoryModels[] = new Category($title, $this->slugResolver->resolve((string)$title));
         }
 
         return $categoryModels;
