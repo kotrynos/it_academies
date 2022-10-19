@@ -12,7 +12,8 @@ class CategoryDataProvider
     public function __construct(
         private CategoryRepository $categoryRepository,
         private CategoryEntityToDTOTransformer $entityToDTOTransformer,
-    ) {}
+    ) {
+    }
 
     public function findAllCategoryTitles(): array
     {
