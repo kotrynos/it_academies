@@ -14,7 +14,8 @@ class AcademyDataProvider
     public function __construct(
         private AcademyRepository $academyRepository,
         private AcademyEntityToDTOTransformer $entityToDTOTransformer,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Academy[]

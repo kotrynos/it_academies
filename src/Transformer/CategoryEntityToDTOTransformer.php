@@ -11,7 +11,8 @@ use App\Resolver\CategorySlugResolver;
 class CategoryEntityToDTOTransformer
 {
     public function __construct(private CategorySlugResolver $slugResolver)
-    {}
+    {
+    }
 
     /**
      * @param CategoryEntity[] $categories

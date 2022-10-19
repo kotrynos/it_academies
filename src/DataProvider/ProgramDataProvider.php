@@ -14,7 +14,8 @@ class ProgramDataProvider
     public function __construct(
         private ProgramRepository $programRepository,
         private ProgramEntityToDTOTransformer $programEntityToDTOTransformer,
-    ) {}
+    ) {
+    }
 
     public function findByCategory(string $category): array
     {
